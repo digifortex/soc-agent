@@ -1,3 +1,9 @@
+# Check for Administrator privileges
+if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "Error: Please run this script as an Administrator!" -ForegroundColor Red
+    exit 1
+}
+
 param (
     [Parameter(Mandatory = $true)]
     [string]$ManagerIP,
@@ -26,7 +32,7 @@ Start-Process -FilePath $localInstallerPath `
 # ============================
 # Wait briefly before next steps
 # ============================
-Start-Sleep -Seconds 1
+Start-Sleep -Seconds 5
 
 # ==============================================
 # Clean internal_options.conf
@@ -54,4 +60,23 @@ if (Test-Path $inputFile) {
 Write-Host "Starting DigiSvc service..."
 Start-Service -Name DigiSvc
 
-Write-Host "`n✅ Digi Agent setup completed successfully!"
+# ============================
+# Cleanup Installer
+# ============================
+if (Test-Path $localInstallerPath) {
+    Remove-Item $localInstallerPath -Force
+    Write-Host "Installer file cleaned up."
+}
+
+# ============================
+# Self-Destruct Script (Optional)
+# ============================
+# Remove script if it was downloaded to TEMP
+$myPath = $MyInvocation.MyCommand.Definition
+if ($myPath -like "$env:TEMP\*") {
+    Write-Host "Cleaning up script: $myPath"
+    Start-Sleep -Seconds 2
+    Remove-Item $myPath -Force
+}
+
+Write-Host "`n✅ Digi Agent setup completed and cleaned up successfully!"
