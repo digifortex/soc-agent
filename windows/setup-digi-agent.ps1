@@ -1,9 +1,3 @@
-# Check for Administrator privileges
-if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Host "Error: Please run this script as an Administrator!" -ForegroundColor Red
-    exit 1
-}
-
 param (
     [Parameter(Mandatory = $true)]
     [string]$ManagerIP,
@@ -11,6 +5,13 @@ param (
     [Parameter(Mandatory = $true)]
     [string]$AgentName
 )
+
+
+# Check for Administrator privileges
+if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "Error: Please run this script as an Administrator!" -ForegroundColor Red
+    exit 1
+}
 
 # ==============================================
 # Download MSI from S3
