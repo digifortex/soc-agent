@@ -27,7 +27,7 @@ Invoke-WebRequest -Uri $downloadUrl -OutFile $localInstallerPath
 # ==============================================
 Write-Host "Installing digi-agent with ManagerIP = $ManagerIP and AgentName = $AgentName..."
 Start-Process -FilePath $localInstallerPath `
-    -ArgumentList "/q DIGI_MANAGER='$ManagerIP' DIGI_AGENT_NAME='$AgentName'" `
+    -ArgumentList "/q DIGI_MANAGER=$ManagerIP DIGI_AGENT_NAME=$AgentName" `
     -Wait
 
 # ============================
@@ -80,4 +80,4 @@ if ($myPath -like "$env:TEMP\*") {
     Remove-Item $myPath -Force
 }
 
-Write-Host "`n✅ Digi Agent setup completed and cleaned up successfully!"
+Write-Host "`n===> Digi Agent setup completed successfully! <===`n" -ForegroundColor Green
