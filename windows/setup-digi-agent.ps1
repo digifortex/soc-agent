@@ -49,7 +49,7 @@ if (Test-Path $inputFile) {
 
     Remove-Item $inputFile -Force
     Rename-Item -Path $tempFile -NewName (Split-Path $inputFile -Leaf)
-    Write-Host "internal_options.conf cleaned successfully."
+    # Write-Host "internal_options.conf cleaned successfully."
 } else {
     Write-Host "Error: $inputFile not found!"
     exit 1
