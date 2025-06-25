@@ -33,7 +33,7 @@ Start-Process -FilePath $localInstallerPath `
 # ============================
 # Wait briefly before next steps
 # ============================
-Start-Sleep -Seconds 2
+Start-Sleep -Seconds 1
 
 # ==============================================
 # Clean internal_options.conf
